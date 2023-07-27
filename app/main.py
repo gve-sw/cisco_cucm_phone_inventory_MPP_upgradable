@@ -86,10 +86,6 @@ def main():
                 device["hardware_revision"] = device_data[2]
                 device["model_number"] = device_data[3]
 
-            if device["model_number"] == "CP-8945":  # just for testing
-                device["model_number"] = "CP-7861"  # just for testing
-                device["hardware_revision"] = "V03"  # just for testing
-
             if device["model_number"] in ELIGIBLE:
                 device["mpp_eligible"] = "ELIGIBLE"
                 if device["model_number"] in SUPPORTED_MIN_HW_CHECK.keys():
