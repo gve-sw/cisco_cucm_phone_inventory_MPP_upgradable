@@ -160,18 +160,18 @@ def get_scraped_phone_data(ip_address):
     soup = BeautifulSoup(fhand, "html.parser")
     phoneData = soup.find_all("b")
 
-    searchList = ["MAC Address", "Serial Number", "Model Number", "Hardware Revision"]
-
+    searchList = ["mac address", "serial number", "model number", "hardware revision"]
+    mac = serial_num = hw_r = model_number = ""
     for bTag in range(len(phoneData)):
-        bText = phoneData[bTag].text.strip()
+        bText = phoneData[bTag].text.strip().lstrip().lower()
         if bText in searchList:
-            if bText == "Hardware Revision":
+            if bText == "hardware revision":
                 hw_r = phoneData[bTag + 1].text
-            elif bText == "Serial Number":
+            elif bText == "serial number":
                 serial_num = phoneData[bTag + 1].text
-            elif bText == "Model Number":
+            elif bText == "model number":
                 model_number = phoneData[bTag + 1].text
-            elif bText == "MAC Address":
+            elif bText == "mac address":
                 mac = phoneData[bTag + 1].text
             # else:
             #   d = [mac, serial_num, hw_r]
