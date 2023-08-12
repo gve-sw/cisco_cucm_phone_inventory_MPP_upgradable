@@ -69,7 +69,7 @@ def main():
         device_name = device_risport["Name"]
         device = {}
         if device_name[0:3] == "SEP" and device_risport["Status"] == "Registered":
-            print("device created for ", device_name)
+            print("creating device for ", device_name)
 
             device["name"] = device_name
 
@@ -85,19 +85,21 @@ def main():
                 device["serial_number"] = device_data[1]
                 device["hardware_revision"] = device_data[2]
                 device["model_number"] = device_data[3]
+            if device["model_number"][0:3] == "CP-":
+                if device["model_number"] in ELIGIBLE:
+                    device["mpp_eligible"] = "ELIGIBLE"
+                    if device["model_number"] in SUPPORTED_MIN_HW_CHECK.keys():
+                        if (
+                            device["hardware_revision"]
+                            < SUPPORTED_MIN_HW_CHECK[device["model_number"]]
+                        ):
+                            device["mpp_eligible"] = "NON ELIGIBLE"
+                else:
+                    device["mpp_eligible"] = "NOT SUPPORTED"
 
-            if device["model_number"] in ELIGIBLE:
-                device["mpp_eligible"] = "ELIGIBLE"
-                if device["model_number"] in SUPPORTED_MIN_HW_CHECK.keys():
-                    if (
-                        device["hardware_revision"]
-                        < SUPPORTED_MIN_HW_CHECK[device["model_number"]]
-                    ):
-                        device["mpp_eligible"] = "NOT SUPPORTED"
+                device_list.append(device)
             else:
-                device["mpp_eligible"] = "NON ELIGIBLE"
-
-            device_list.append(device)
+                print("skipping device that is not model CP-")
 
     return render_template(
         "inventory.html",

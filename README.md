@@ -77,8 +77,6 @@ python3 main.py
 
 ![alt text](images/web_page_screenshot1.png)
 
-![alt text](images/web_page_screenshot2.png)
-
 ### API Reference/Documentation (VERY USEFUL TO CHECK OUT!):
 
 - [Original code repo from David Staudt using suds python libary (library being used for this project)] (https://github.com/CiscoDevNet/axl-python-suds-sample)
